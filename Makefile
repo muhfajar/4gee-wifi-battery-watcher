@@ -4,6 +4,3 @@ setup-env:
 
 start:
 	pipenv run python main.py
-
-shell:
-	pipenv run celery shell
