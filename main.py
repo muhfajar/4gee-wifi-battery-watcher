@@ -2,6 +2,7 @@
 
 import sys
 import time
+import json
 import pync
 import random
 import requests
@@ -49,10 +50,13 @@ def main():
             msg = switcher.get(json_data['bat_level'], "Unknown battery level")
             print(msg)
             pync.notify("{msg}\n(click to see detail)".format(msg=msg), open="http://192.168.1.1/index.html",
-                        appIcon="img/{level}.png".format(level=json_data['bat_level']), title='4Gee Wifi Mini')
+                        appIcon="img/{level}.png".format(level=json_data['bat_level']), title="4Gee Wifi Mini")
             log_status = json_data['bat_level']
         except KeyboardInterrupt:
             pync.notify("Watcher closed")
+            sys.exit()
+        except (ConnectionError, json.decoder.JSONDecodeError):
+            pync.notify("4Gee Wifi Mini not found")
             sys.exit()
 
 
